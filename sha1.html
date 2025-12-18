@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Shaz Cakes | Signature Bakery 2025</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+        --primary: #2D1B14; --accent: #D4AF37; --bg: #FDFBF7;
+        --ig-grad: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+    }
+    body { font-family: 'Inter', sans-serif; background-color: var(--bg); color: var(--primary); scroll-behavior: smooth; }
+    h1, h2, h3, .serif { font-family: 'Playfair Display', serif; }
+    .glass { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px); border: 1px solid rgba(45, 27, 20, 0.1); }
+    @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    .animate-up { animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+  </style>
+</head>
+<body class="min-h-screen">
+
+  <div class="bg-[#2D1B14] text-[#D4AF37] py-2.5 text-center text-[10px] font-black uppercase tracking-[0.2em]">
+    Official Shaz Cakes 2025 • Matale Region Partner Program Active
+  </div>
+
+  <header class="sticky top-0 z-50 glass">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+      <div class="flex items-center gap-2 cursor-pointer" onclick="window.scrollTo(0,0)">
+        <span class="text-2xl font-black text-amber-600">S.</span>
+        <h1 class="text-xl font-bold tracking-tight">Shaz Cakes</h1>
+      </div>
+      <div class="flex items-center gap-4 sm:gap-8">
+        <button onclick="openPartnerModal()" class="text-[10px] font-black uppercase tracking-widest text-amber-700 hover:text-black transition">Partner Login</button>
+        <button onclick="toggleCart()" class="relative bg-black text-white px-5 py-2.5 rounded-full flex items-center gap-2 shadow-xl">
+            <span id="badge" class="bg-amber-500 text-black w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-black">0</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <section class="max-w-7xl mx-auto px-6 pt-12 pb-8 text-center">
+    <div class="animate-up">
+        <span class="bg-red-50 text-red-700 px-4 py-1.5 rounded-full text-[9px] font-black uppercase tracking-[0.1em]">2025 Seasonal Collection</span>
+        <h2 class="text-5xl md:text-7xl mt-6 mb-6 leading-tight">Artisan Cakes<br>for Matale.</h2>
+        <div class="flex overflow-x-auto no-scrollbar gap-3 pb-4 justify-start sm:justify-center" id="catBar"></div>
+    </div>
+  </section>
+
+  <main class="max-w-7xl mx-auto px-6 py-8">
+    <div id="grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12"></div>
+  </main>
+
+  <div id="partnerModal" class="fixed inset-0 z-[100] hidden items-center justify-center p-3 sm:p-6 bg-black/90 backdrop-blur-sm">
+    <div class="bg-white rounded-[32px] w-full max-w-5xl max-h-[90vh] overflow-y-auto shadow-2xl flex flex-col md:flex-row animate-up relative">
+        <button onclick="closePartnerModal()" class="absolute top-4 right-4 text-zinc-400 hover:text-black z-20 bg-white/10 rounded-full p-2">✕</button>
+        
+        <div class="w-full md:w-5/12 bg-[#2D1B14] p-8 sm:p-12 text-white">
+            <h3 class="text-3xl font-serif mb-2 text-amber-500">Partner Program</h3>
+            <p class="text-zinc-500 text-xs mb-8 uppercase tracking-widest font-bold">Updated: Dec 2025</p>
+            
+            <div class="space-y-6">
+                <div class="flex gap-4 items-start">
+                    <span class="text-amber-500 font-black italic">01.</span>
+                    <p class="text-xs text-zinc-300">Share your 2025 MAT-CODE with customers. Every order is tracked manually.</p>
+                </div>
+                <div class="flex gap-4 items-start border-t border-white/5 pt-4">
+                    <span class="text-amber-500 font-black italic">02.</span>
+                    <p class="text-xs text-zinc-300">Commission is 10% on cake price. Paid via Bank Transfer every Sunday.</p>
+                </div>
+                <div class="flex gap-4 items-start border-t border-white/5 pt-4">
+                    <span class="text-amber-500 font-black italic">03.</span>
+                    <p class="text-xs text-zinc-300 text-amber-200">Orders are ONLY confirmed after Advance Payment receipt is shared.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="w-full md:w-7/12 p-8 sm:p-12 bg-white">
+            <h4 class="text-xl font-bold mb-6 italic">2025 Profit Calculator</h4>
+            <div class="bg-zinc-50 p-6 rounded-3xl border border-zinc-100 mb-8">
+                <label class="text-[9px] font-black text-zinc-400 uppercase tracking-widest mb-3 block">Total Sale Value (LKR)</label>
+                <div class="flex items-center gap-3 border-b-2 border-zinc-200 py-2 focus-within:border-amber-500 transition">
+                    <span class="font-bold text-zinc-400 text-lg">Rs.</span>
+                    <input id="calcInput" oninput="calculateCommission()" type="number" placeholder="5500" class="w-full bg-transparent border-none font-bold text-2xl outline-none">
+                </div>
+                <div class="mt-8 flex justify-between items-end">
+                    <span class="text-xs font-bold text-zinc-500 uppercase">Your 10% Earning:</span>
+                    <span id="calcResult" class="text-4xl font-black text-amber-600">Rs. 0</span>
+                </div>
+            </div>
+            
+            <button onclick="applyPartner()" class="w-full py-5 rounded-2xl bg-black text-white font-bold shadow-xl hover:bg-zinc-800 transition uppercase tracking-widest text-xs mb-4">Register as Partner</button>
+            <p class="text-[10px] text-center text-zinc-400">Application requires a valid Matale address.</p>
+        </div>
+    </div>
+  </div>
+
+  <div id="cart" class="fixed inset-y-0 right-0 w-full sm:w-[450px] bg-white shadow-2xl z-[70] transform translate-x-full transition-transform duration-500 flex flex-col">
+    <div class="p-8 border-b flex justify-between items-center">
+        <h3 class="text-2xl font-bold italic">Your Tray</h3>
+        <button onclick="toggleCart()" class="text-zinc-400 text-2xl">✕</button>
+    </div>
+    <div id="cartList" class="flex-1 overflow-y-auto p-8 space-y-6"></div>
+    <div id="cartFooter" class="p-8 border-t space-y-4 hidden">
+        <input id="refInput" type="text" placeholder="REFERRAL CODE (OPTIONAL)" class="w-full p-4 rounded-xl bg-zinc-100 border-none text-[10px] font-black uppercase tracking-widest focus:ring-1 focus:ring-amber-500 outline-none">
+        <button onclick="checkout()" class="w-full py-5 rounded-full font-bold text-xs tracking-widest uppercase text-white shadow-lg" style="background: var(--ig-grad)">Send Order to Instagram</button>
+    </div>
+  </div>
+
+  <script>
+    const IG_LINK = `https://instagram.com/cake.shaz`;
+    
+    // THE DATED DATA OBJECT - UPDATED WITH ALL YOUR IMAGE PATHS
+    const DATA = [
+        // SIGNATURE
+        { id:'s1', name:'American Butter', cat:'Signature', img:'assets/images/signature/american butter.jpg', desc:'Creamy 2025 signature buttercream layers.' },
+        { id:'s2', name:'Brownie', cat:'Signature', img:'assets/images/signature/brownie.jpg', desc:'Classic fudgy cocoa brownie.' },
+        { id:'s3', name:'Butter Cream', cat:'Signature', img:'assets/images/signature/butter cream.jpg', desc:'Traditional light buttercream sponge.' },
+        { id:'s4', name:'Cheese Cake', cat:'Signature', img:'assets/images/signature/cheese cake.jpg', desc:'Smooth and rich cream cheese luxury.' },
+        { id:'s5', name:'Chocolate Cake', cat:'Signature', img:'assets/images/signature/chocolate cake.jpg', desc:'Our #1 best selling chocolate sponge.' },
+        { id:'s6', name:'Chocolate Ganache', cat:'Signature', img:'assets/images/signature/chocolate ganache.jpg', desc:'Intense dark chocolate ganache finish.' },
+        { id:'s7', name:'Nutella Brownie', cat:'Signature', img:'assets/images/signature/nutella brownie.jpg', desc:'Brownies swirled with premium Nutella.' },
+        { id:'s8', name:'Pineapple', cat:'Signature', img:'assets/images/signature/pineapple.jpg', desc:'Fresh Matale pineapple layered cake.' },
+        { id:'s9', name:'Plum Cake', cat:'Signature', img:'assets/images/signature/plum cake.jpg', desc:'Spiced traditional fruit plum cake.' },
+        { id:'s10', name:'Rich Date Cake', cat:'Signature', img:'assets/images/signature/rich date cake.jpg', desc:'Luxury dates and nut infusion.' },
+        
+        // PREMIUM
+        { id:'p1', name:'Aesthetic Cake', cat:'Premium', img:'assets/images/premium cake/aesthetic cake.jpg', desc:'Modern minimal floral designs.' },
+        { id:'p2', name:'Black Forest', cat:'Premium', img:'assets/images/premium cake/black forest.jpg', desc:'Classic cherries and whipped cream.' },
+        { id:'p3', name:'Custom Design', cat:'Premium', img:'assets/images/premium cake/customers design.jpg', desc:'Bespoke cake based on your reference.' },
+        { id:'p4', name:'D-Special', cat:'Premium', img:'assets/images/premium cake/d.jpg', desc:'Premium special edition design.' },
+        { id:'p5', name:'Fondant Cake', cat:'Premium', img:'assets/images/premium cake/fondant cake.jpg', desc:'Artistic hand-sculpted fondant art.' },
+        { id:'p6', name:'Gravity Cake', cat:'Premium', img:'assets/images/premium cake/gravity cake.jpg', desc:'Eye-catching gravity defying design.' },
+        { id:'p7', name:'Marble Cake', cat:'Premium', img:'assets/images/premium cake/marble cake.jpg', desc:'Elegant chocolate-vanilla swirls.' },
+        { id:'p8', name:'Wedding Cake', cat:'Premium', img:'assets/images/premium cake/wedding cake.jpg', desc:'Multitiered Matale wedding specialist.' },
+
+        // CUPCAKES
+        { id:'c1', name:'Fudge Brownie Cup', cat:'Cupcakes', img:'assets/images/cup cakes/fudge brownie.jpg', desc:'Mini fudgy brownie bites.' },
+        { id:'c2', name:'Red Velvet Cup', cat:'Cupcakes', img:'assets/images/cup cakes/red velvet cup.jpg', desc:'Red velvet minis with cream cheese.' },
+        { id:'c3', name:'Red Velvet Classic', cat:'Cupcakes', img:'assets/images/cup cakes/red velvet.jpg', desc:'Traditional large Red Velvet.' }
+    ];
+
+    let tray = [];
+
+    function init() {
+        const catBar = document.getElementById('catBar');
+        const cats = ['All', 'Signature', 'Premium', 'Cupcakes'];
+        cats.forEach(c => {
+            const b = document.createElement('button');
+            b.className = "flex-shrink-0 px-6 py-2 rounded-full border border-zinc-200 bg-white text-[10px] font-black uppercase tracking-widest hover:bg-black hover:text-white transition";
+            b.innerText = c;
+            b.onclick = () => render(c === 'All' ? DATA : DATA.filter(d => d.cat === c));
+            catBar.appendChild(b);
+        });
+        render(DATA);
+    }
+
+    function render(list) {
+        const grid = document.getElementById('grid');
+        grid.innerHTML = list.map(p => `
+            <div class="group cursor-pointer bg-white rounded-[32px] overflow-hidden border border-zinc-100 shadow-sm hover:shadow-2xl transition-all" onclick="addToTray('${p.id}')">
+                <div class="h-80 overflow-hidden relative">
+                    <img src="${p.img}" class="w-full h-full object-cover transition duration-700 group-hover:scale-105" onerror="this.src='https://via.placeholder.com/400?text=Cake'">
+                    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+                        <span class="bg-white text-black px-5 py-2 rounded-full text-[10px] font-black uppercase">Add to Tray</span>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <span class="text-[9px] font-black uppercase text-amber-600 tracking-widest">${p.cat}</span>
+                    <h4 class="text-xl font-serif mt-1">${p.name}</h4>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    function addToTray(id) {
+        const item = DATA.find(p => p.id === id);
+        tray.push({ ...item, tid: Date.now() });
+        updateTray();
+        toggleCart();
+    }
+
+    function toggleCart() { document.getElementById('cart').classList.toggle('translate-x-full'); }
+
+    function updateTray() {
+        const list = document.getElementById('cartList');
+        document.getElementById('badge').innerText = tray.length;
+        if(tray.length === 0) {
+            list.innerHTML = '<p class="text-center py-20 text-zinc-300 italic">No items selected</p>';
+            document.getElementById('cartFooter').classList.add('hidden');
+            return;
+        }
+        document.getElementById('cartFooter').classList.remove('hidden');
+        list.innerHTML = tray.map(i => `<div class="flex gap-4 items-center"><img src="${i.img}" class="w-16 h-16 rounded-xl object-cover"><div><h5 class="font-bold text-sm">${i.name}</h5><button onclick="remove(${i.tid})" class="text-[9px] font-black text-red-400 uppercase">Remove</button></div></div>`).join('');
+    }
+
+    function remove(tid) { tray = tray.filter(t => t.tid !== tid); updateTray(); }
+    function openPartnerModal() { document.getElementById('partnerModal').classList.replace('hidden', 'flex'); }
+    function closePartnerModal() { document.getElementById('partnerModal').classList.replace('flex', 'hidden'); }
+    function calculateCommission() {
+        const amt = document.getElementById('calcInput').value;
+        document.getElementById('calcResult').innerText = `Rs. ${Math.floor(amt * 0.1) || 0}`;
+    }
+
+    function checkout() {
+        const ref = document.getElementById('refInput').value || "NONE";
+        let msg = `🍰 NEW ORDER 2025\n\n`;
+        tray.forEach((t, x) => msg += `${x+1}. ${t.name}\n`);
+        msg += `\nPartner Code: ${ref.toUpperCase()}\n--------------------\nSent from Shaz Cakes Portal`;
+        navigator.clipboard.writeText(msg).then(() => {
+            alert("Order Details Copied! Redirecting to Instagram...");
+            window.open(IG_LINK, '_blank');
+        });
+    }
+
+    function applyPartner() {
+        window.open(IG_LINK + `?text=Hi, I want to apply for the 2025 Partner Program.`, '_blank');
+    }
+
+    init();
+  </script>
+</body>
+</html>
